@@ -1,4 +1,5 @@
 import {randomUUID} from "crypto";
+import { Entity } from "../../core/entities/entity";
 
 interface AdminProps {
     name: string
@@ -6,12 +7,15 @@ interface AdminProps {
     password: string
 }
 
-export class Admin {
-    public id: string
-    public props: AdminProps
+export class Admin extends Entity<AdminProps>{
 
-    constructor(props: AdminProps, id?: string) {
-        this.id = id ?? randomUUID()
-        this.props = props
+    get name(){
+        return this.props.name
+    }
+
+    static create(props: AdminProps, id?: string){
+        const admin = new Admin(props, id)
+
+        return admin
     }
 }

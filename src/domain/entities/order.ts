@@ -1,4 +1,5 @@
 import {randomUUID} from "crypto";
+import { Entity } from "../../core/entities/entity";
 
 interface OrderProps {
     description: string
@@ -11,13 +12,16 @@ interface OrderProps {
     deliveryDate: Date
 }
 
-export class Order {
-    public id: string
-    public props: OrderProps
+export class Order extends Entity<OrderProps>{
 
-    constructor(props: OrderProps, id?: string) {
-        this.id = id ?? randomUUID()
-        this.props = props
+    get status() {
+        return this.props.status
+    }
+
+    static create(props: OrderProps, id?: string) {
+        const order = new Order(props, id)
+
+        return order
     }
 
 }

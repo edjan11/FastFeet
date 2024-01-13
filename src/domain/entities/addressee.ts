@@ -1,4 +1,5 @@
 import {randomUUID} from "crypto";
+import { Entity } from "../../core/entities/entity";
 
 interface AddresseeProps {
     name: string
@@ -7,13 +8,16 @@ interface AddresseeProps {
     addressId: string
 }
 
-export class Addressee {
-        public id: string
-        public props: AddresseeProps 
+export class Addressee extends Entity<AddresseeProps>{    
 
-    constructor(props: AddresseeProps, id?: string) {
-            this.id = id ?? randomUUID()
-            this.props = props
-    }
+        get name() {
+            return this.props.name
+        }
+
+        static create(props: AddresseeProps, id?: string) {
+            const addressee = new Addressee(props, id)
+
+            return addressee 
+        }
 }
 
